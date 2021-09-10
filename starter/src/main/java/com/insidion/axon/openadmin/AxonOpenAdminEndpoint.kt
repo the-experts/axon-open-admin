@@ -5,6 +5,7 @@ import com.insidion.axon.openadmin.model.TokenInformationDTO
 import com.insidion.axon.openadmin.processors.ProcessorStatusService
 import com.insidion.axon.openadmin.tokens.TokenInformationService
 import org.axonframework.config.EventProcessingModule
+import org.axonframework.eventhandling.StreamingEventProcessor
 import org.axonframework.eventhandling.TrackingEventProcessor
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
@@ -117,8 +118,8 @@ class AxonOpenAdminEndpoint(
         }
     }
 
-    private fun runOnProcessorWithResponse(processorName: String, block: (TrackingEventProcessor) -> Boolean): ResponseEntity<Unit> {
-        val eventProcessor = eventProcessingModule.eventProcessor(processorName, TrackingEventProcessor::class.java)
+    private fun runOnProcessorWithResponse(processorName: String, block: (StreamingEventProcessor) -> Boolean): ResponseEntity<Unit> {
+        val eventProcessor = eventProcessingModule.eventProcessor(processorName, StreamingEventProcessor::class.java)
         if(!eventProcessor.isPresent) {
             return ResponseEntity.status(409).build()
         }

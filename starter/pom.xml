@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.insidion</groupId>
+        <groupId>nl.codecentric</groupId>
         <artifactId>axon-open-admin-parent</artifactId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
@@ -17,7 +17,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.insidion</groupId>
+            <groupId>nl.codecentric</groupId>
             <artifactId>axon-open-admin-frontend</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-core</artifactId>
-            <version>1.7.0</version>
+            <version>1.7.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -51,9 +51,9 @@
             <version>2.8.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -66,13 +66,6 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>io.mockk</groupId>-->
-        <!--            <artifactId>mockk</artifactId>-->
-        <!--            <version>${mockk.version}</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
     </dependencies>
 
     <build>

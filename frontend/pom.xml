@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.insidion</groupId>
+        <groupId>nl.codecentric</groupId>
         <artifactId>axon-open-admin-parent</artifactId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
@@ -12,8 +12,8 @@
     <name>Frontend</name>
 
     <properties>
-        <nodejs.version>v12.14.0</nodejs.version>
-        <yarn.version>v1.21.1</yarn.version>
+        <nodejs.version>v14.17.6</nodejs.version>
+        <yarn.version>v1.22.11</yarn.version>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
     </properties>
 
