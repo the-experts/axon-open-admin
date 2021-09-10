@@ -1,63 +1,71 @@
-import React, {useEffect} from 'react';
+import React, {useCallback} from 'react';
 import 'antd/dist/antd.css';
 
-import {Card, Layout, Popover, Space, Typography} from "antd";
+import {Layout, Menu, Typography} from "antd";
 import {Provider} from "react-redux";
 import store from "./redux/store";
-import TokenStatusContainer from "./components/tokens/TokenStatusContainer";
-import {startTokenFetching, stopTokenFetching} from "./redux/tokens/fetcher";
-import ProcessorStatusContainer from "./components/processors/ProcessorStatusContainer";
-import {QuestionCircleOutlined} from "@ant-design/icons";
-import EventTableContainer from "./components/events/EventTableContainer";
+import {BranchesOutlined, DashboardOutlined, DatabaseOutlined} from "@ant-design/icons";
+import {Header} from "antd/es/layout/layout";
+import Sider from "antd/es/layout/Sider";
+import {BrowserRouter, Route, useHistory, useLocation} from "react-router-dom";
+import {TokenManagementPage} from "./pages/TokenManagementPage";
+import {ProcessorStatusPage} from "./pages/ProcessorStatusPage";
+import {EventsPage} from "./pages/EventsPage";
+
+function AppMenu() {
+    const history = useHistory();
+    const location = useLocation();
+    const onSelectCallback = useCallback(({key}) => {
+        history.push(`${key}`)
+    }, [history])
+
+    const selectedKey = location.pathname === "/" ? "/tokens" : location.pathname;
+    return <Menu
+        mode="inline"
+        defaultSelectedKeys={[selectedKey]}
+        defaultOpenKeys={['/tokens']}
+        onSelect={onSelectCallback}
+        style={{height: '100%', borderRight: 0}}
+    >
+        <Menu.Item key="/tokens"><BranchesOutlined/> Token Management</Menu.Item>
+        <Menu.Item key="/processors"><DashboardOutlined/> Processor Status</Menu.Item>
+        <Menu.Item key="/events"><DatabaseOutlined/> Events log</Menu.Item>
+    </Menu>;
+}
 
 function App() {
-    useEffect(() => {
-        startTokenFetching()
-        return () => stopTokenFetching()
-    }, [])
     return (
-        <Provider store={store}>
-            <Layout>
-                <Layout.Header className="header">
-                    <Typography.Title className="logo" level={2}>Axon Open Admin</Typography.Title>
-                </Layout.Header>
-                <Layout.Content style={{padding: '10px'}}>
-                    <Space direction={"vertical"}>
-                        <Card title={<div>
-                            <Popover
-                                placement={"right"}
-                                style={{float: 'right'}}
-                                content={
-                                    <Typography.Text>Here you can find the status of the segments of each token. You can find a description of each possible action by hovering over it. Good luck!</Typography.Text>}>
-                                <QuestionCircleOutlined /></Popover>  Token status
-                        </div>}>
-                            <TokenStatusContainer/>
-                        </Card>
-                        <Card title={<div>
-                            <Popover
-                                placement={"right"}
-                                style={{float: 'right'}}
-                                content={
-                                    <Typography.Text>Here you can find the status of the nodes we have discovered through firing rest calls at your back-ends. Don't worry,
-                                        they
-                                        are lightning-fast calls with little performance impact. Each time a node is discovered, or is lost, the table is
-                                        updated.</Typography.Text>}>
-                                <QuestionCircleOutlined /></Popover>  Processor status
-                        </div>}>
-                            <Space direction={"vertical"}>
-                                <ProcessorStatusContainer/>
-                            </Space>
-                        </Card>
+        <BrowserRouter>
+            <Provider store={store}>
+                <Layout style={{minHeight: '100vh'}}>
+                    <Header className="header">
+                        <img src="logo.png" alt={"codecentric Logo"}/>
+                        <Typography.Title className={"title"} level={1}>Axon Open Admin</Typography.Title>
+                    </Header>
+                    <Layout>
+                        <Sider width={200} className="site-layout-background">
+                            <AppMenu/>
+                        </Sider>
+                        <Layout style={{padding: '0 24px 24px'}}>
+                            <Layout.Content
+                                className="site-layout-background"
+                                style={{
+                                    padding: 24,
+                                    margin: 0,
+                                    minHeight: 280,
+                                }}
+                            >
 
-                        <Card title={<div>Last 50 events</div>}>
-                            <Space direction={"vertical"}>
-                                <EventTableContainer/>
-                            </Space>
-                        </Card>
-                    </Space>
-                </Layout.Content>
-            </Layout>
-        </Provider>
+                                <Route path={"/"} exact><TokenManagementPage/></Route>
+                                <Route path={"/tokens"}><TokenManagementPage/></Route>
+                                <Route path={"/processors"}><ProcessorStatusPage/></Route>
+                                <Route path={"/events"}><EventsPage/></Route>
+                            </Layout.Content>
+                        </Layout>
+                    </Layout>
+                </Layout>
+            </Provider>
+        </BrowserRouter>
     );
 }
 

@@ -11,7 +11,7 @@ function ProcessorTable({rows}: { rows: EventModel[] }) {
             <Table.Column title="Index" key="index" dataIndex="index"/>
             <Table.Column title="Timestamp" key="timestamp" dataIndex="timestamp"/>
             <Table.Column title="Name" key="payloadType" dataIndex="payloadType"/>
-            <Table.Column title="Payload" key="payload" dataIndex="payload" width={1000}/>
+            <Table.Column title="Payload" key="payload" dataIndex="payload"/>
         </Table>
     );
 }
