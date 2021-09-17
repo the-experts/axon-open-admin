@@ -5,7 +5,7 @@ import {contextPath} from "../../../context";
 import {DeleteOutlined} from "@ant-design/icons";
 
 async function replayProcessor(name: string, attempt = 1) {
-    const result = await fetch(`${contextPath}/processor/${name}/reset`, {method: 'POST'})
+    const result = await fetch(`/${contextPath}/processor/${name}/reset`, {method: 'POST'})
     if (!result.ok) {
         if (attempt > 5) {
             return;

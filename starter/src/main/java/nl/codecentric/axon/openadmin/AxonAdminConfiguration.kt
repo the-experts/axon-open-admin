@@ -1,20 +1,14 @@
-package com.insidion.axon.openadmin
+package nl.codecentric.axon.openadmin
 
-import com.insidion.axon.openadmin.tokens.DummyTokenProvider
-import com.insidion.axon.openadmin.tokens.JdbcTokenProvider
-import com.insidion.axon.openadmin.tokens.JpaTokenProvider
-import com.insidion.axon.openadmin.tokens.TokenProvider
-import io.micrometer.core.instrument.MeterRegistry
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry
-import org.axonframework.config.EventProcessingConfiguration
-import org.axonframework.config.EventProcessingModule
+import nl.codecentric.axon.openadmin.tokens.DummyTokenProvider
+import nl.codecentric.axon.openadmin.tokens.JdbcTokenProvider
+import nl.codecentric.axon.openadmin.tokens.JpaTokenProvider
+import nl.codecentric.axon.openadmin.tokens.TokenProvider
 import org.axonframework.eventhandling.tokenstore.TokenStore
 import org.axonframework.eventhandling.tokenstore.jdbc.JdbcTokenStore
 import org.axonframework.eventhandling.tokenstore.jpa.JpaTokenStore
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -23,7 +17,7 @@ import javax.annotation.PostConstruct
 import javax.sql.DataSource
 
 @Configuration(proxyBeanMethods = false)
-@ComponentScan("com.insidion.axon.openadmin")
+@ComponentScan("nl.codecentric.axon.openadmin")
 class AxonAdminConfiguration (
     @Value("\${server.servlet.context-path:}")
     val contextPath: String

@@ -1,25 +1,28 @@
-import React, {useCallback} from 'react';
-import 'antd/dist/antd.css';
+import {BranchesOutlined, DashboardOutlined, DatabaseOutlined} from "@ant-design/icons";
 
 import {Layout, Menu, Typography} from "antd";
-import {Provider} from "react-redux";
-import store from "./redux/store";
-import {BranchesOutlined, DashboardOutlined, DatabaseOutlined} from "@ant-design/icons";
-import {Header} from "antd/es/layout/layout";
+import 'antd/dist/antd.css';
+import {Footer, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
+import React, {useCallback} from 'react';
+import {Provider} from "react-redux";
 import {BrowserRouter, Route, useHistory, useLocation} from "react-router-dom";
-import {TokenManagementPage} from "./pages/TokenManagementPage";
-import {ProcessorStatusPage} from "./pages/ProcessorStatusPage";
+import {contextPath} from "./context";
 import {EventsPage} from "./pages/EventsPage";
+import {ProcessorStatusPage} from "./pages/ProcessorStatusPage";
+import {TokenManagementPage} from "./pages/TokenManagementPage";
+import store from "./redux/store";
 
 function AppMenu() {
     const history = useHistory();
     const location = useLocation();
     const onSelectCallback = useCallback(({key}) => {
-        history.push(`${key}`)
+        history.push(`/${contextPath}${key}`)
     }, [history])
 
-    const selectedKey = location.pathname === "/" ? "/tokens" : location.pathname;
+    const realUrl = location.pathname.startsWith("/" + contextPath) ? location.pathname.substr(contextPath.length + 1) : location.pathname
+
+    const selectedKey = realUrl === "/" ? "/tokens" : realUrl;
     return <Menu
         mode="inline"
         defaultSelectedKeys={[selectedKey]}
@@ -56,13 +59,18 @@ function App() {
                                 }}
                             >
 
-                                <Route path={"/"} exact><TokenManagementPage/></Route>
-                                <Route path={"/tokens"}><TokenManagementPage/></Route>
-                                <Route path={"/processors"}><ProcessorStatusPage/></Route>
-                                <Route path={"/events"}><EventsPage/></Route>
+                                <Route path={`/${contextPath}/`} exact><TokenManagementPage/></Route>
+                                <Route path={`/${contextPath}/tokens`}><TokenManagementPage/></Route>
+                                <Route path={`/${contextPath}/processors`}><ProcessorStatusPage/></Route>
+                                <Route path={`/${contextPath}/events`}><EventsPage/></Route>
                             </Layout.Content>
                         </Layout>
                     </Layout>
+                    <Footer>
+                        <div style={{textAlign: 'center'}}>
+                            <span>Axon Open Admin was built by <a target="_blank" rel="noreferrer" href={"https://codecentric.nl"}>codecentric Netherlands</a></span>
+                        </div>
+                    </Footer>
                 </Layout>
             </Provider>
         </BrowserRouter>

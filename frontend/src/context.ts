@@ -5,5 +5,5 @@ function getContentPath() {
     }
     return appContextPath
 }
-
+console.log("context-path is " + getContentPath())
 export const contextPath = getContentPath()

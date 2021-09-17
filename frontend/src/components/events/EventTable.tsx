@@ -5,7 +5,7 @@ import {EventModel} from "../../redux/events/models";
 function ProcessorTable({rows}: { rows: EventModel[] }) {
     const mappedRows = rows.map(row => Object.assign({}, row, {key: row.aggregate + '_' + row.index}))
     return (
-        <Table dataSource={mappedRows} pagination={{pageSize: 20}} size={"small"} tableLayout={"fixed"}>
+        <Table dataSource={mappedRows} pagination={false} size={"small"} tableLayout={"fixed"}>
             <Table.Column title="Sequence" key="globalSequence" dataIndex="globalSequence"/>
             <Table.Column title="Aggregate" key="aggregate" dataIndex="aggregate"/>
             <Table.Column title="Index" key="index" dataIndex="index"/>

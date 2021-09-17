@@ -1,6 +1,6 @@
-package com.insidion.axon.openadmin.processors
+package nl.codecentric.axon.openadmin.processors
 
-import com.insidion.axon.openadmin.tokens.TokenProvider
+import nl.codecentric.axon.openadmin.tokens.TokenProvider
 import org.axonframework.config.EventProcessingModule
 import org.axonframework.eventhandling.TrackingEventProcessor
 import org.axonframework.springboot.EventProcessorProperties
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProcessorStatusService(
-    private val eventProcessingModule: EventProcessingModule,
-    private val tokenProvider: TokenProvider,
-    private val eventProcessingProperties: EventProcessorProperties
+        private val eventProcessingModule: EventProcessingModule,
+        private val tokenProvider: TokenProvider,
+        private val eventProcessingProperties: EventProcessorProperties
 ) {
     fun getStatus() = EventProcessorStatusDTO(tokenProvider.getNodeId(), eventProcessingModule.eventProcessors().keys.mapNotNull { name ->
         eventProcessingModule.eventProcessor(name, TrackingEventProcessor::class.java).map {
@@ -21,7 +21,7 @@ class ProcessorStatusService(
     })
 
     data class EventProcessorStatusDTO(
-        val nodeId: String,
-        val processorStatuses: List<ProcessorStatusDTO>,
+            val nodeId: String,
+            val processorStatuses: List<ProcessorStatusDTO>,
     )
 }

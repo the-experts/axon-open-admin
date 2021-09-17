@@ -5,7 +5,7 @@ import {contextPath} from "../../../context";
 import {TokenOverviewData} from "../TokenOverviewData";
 
 async function mergeProcessor(name: string, segment: number, attempt = 1) {
-    const result = await fetch(`${contextPath}/processor/${name}/merge/${segment}`, {method: 'POST'})
+    const result = await fetch(`/${contextPath}/processor/${name}/merge/${segment}`, {method: 'POST'})
     if (!result.ok) {
         if (attempt > 5) {
             return;
@@ -24,9 +24,9 @@ export function MergeAction({row}: { row: TokenOverviewData }) {
         setLoading(false)
     }, [row.processorName, row.segment])
 
-    return <Popover content={<p>Merges the segment with its ancestor, creating one token out of two. <br/>Effectively reduces active event processor threads by one.</p>}
+    return <Popover content={<p>Merges the segment with its closest relative (segment {row.mergeableSegment}), creating one token out of two. <br/>Effectively reduces active event processor threads by one.</p>}
                     placement={"bottom"}>
-        <Button type="default" loading={loading} onClick={onSplitAction}>
+        <Button type="default" loading={loading} onClick={onSplitAction} disabled={row.owner == null || row.mergeableSegment === row.segment || !row.isMergable}>
             <MergeCellsOutlined/>
         </Button>
     </Popover>

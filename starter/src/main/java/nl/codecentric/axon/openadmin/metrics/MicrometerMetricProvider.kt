@@ -1,18 +1,17 @@
-package com.insidion.axon.openadmin.metrics
+package nl.codecentric.axon.openadmin.metrics
 
-import com.insidion.axon.openadmin.model.ProcessorId
+import nl.codecentric.axon.openadmin.model.ProcessorId
 import io.micrometer.core.instrument.Gauge
 import io.micrometer.core.instrument.MeterRegistry
 import org.axonframework.eventhandling.tokenstore.AbstractTokenEntry
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
 import org.springframework.stereotype.Service
 
 @Service
 @ConditionalOnBean(type = ["io.micrometer.core.instrument.MeterRegistry"])
 class MicrometerMetricProvider(
-    private val processorMetricsService: ProcessorMetricsService,
-    private val meterRegistry: MeterRegistry,
+        private val processorMetricsService: TokenStatusService,
+        private val meterRegistry: MeterRegistry,
 ) {
 
     fun registerTokenAsGauge(it: AbstractTokenEntry<*>, processorId: ProcessorId) {

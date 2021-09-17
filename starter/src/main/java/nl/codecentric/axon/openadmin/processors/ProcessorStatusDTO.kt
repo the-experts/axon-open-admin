@@ -1,4 +1,4 @@
-package com.insidion.axon.openadmin.processors
+package nl.codecentric.axon.openadmin.processors
 
 data class ProcessorStatusDTO(
     val name: String,

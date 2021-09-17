@@ -5,7 +5,7 @@ import {SwapOutlined} from "@ant-design/icons";
 import {contextPath} from "../../../context";
 
 async function releaseSegment(name: string, segment: number, attempt = 1) {
-    const result = await fetch(`${contextPath}/processor/${name}/release/${segment}`, {method: 'POST'})
+    const result = await fetch(`/${contextPath}/processor/${name}/release/${segment}`, {method: 'POST'})
     if (!result.ok) {
         if (attempt > 5) {
             return;

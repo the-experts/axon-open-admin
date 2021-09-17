@@ -1,4 +1,4 @@
-import {Space, Table, Tag, Typography} from "antd";
+import {Popover, Space, Table, Tag, Typography} from "antd";
 import React from "react";
 import {TokenOverviewData} from "./TokenOverviewData";
 import {ProcessorActions} from "./actions/ProcesorActions";
@@ -11,7 +11,8 @@ function TokenTable({loading, rows}: { loading: boolean, rows: TokenOverviewData
             <Table.Column title="Processor" key="processorName"
                           render={row => ({children: <ProcessorTitle row={row}/>, props: {rowSpan: row.rowSpan}})}/>
             <Table.Column title="Actions" key="processorActions" render={row => ({children: <ProcessorActions row={row}/>, props: {rowSpan: row.rowSpan}})}/>
-            <Table.Column title="Segment" key="segment" dataIndex="segment"/>
+            <Table.Column title="Segment" key="segment" render={row => row.mergeableSegment !== row.segment ?
+                <Popover content={"Can be merged with segment " + row.mergeableSegment}>{row.segment}</Popover> : row.segment}/>
             <Table.Column title="Status" key="status" render={row => <StatusRow row={row}/>}/>
             <Table.Column title={"Behind"} key="behind" dataIndex="behind"/>
             <Table.Column title="Events/m (1m)" key="positionRate1m" dataIndex="positionRate1m"/>

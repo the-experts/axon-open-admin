@@ -30,7 +30,7 @@ function ProcessorTable({rows, processors}: { rows: NodeInformation[], processor
                             <Tag color={available > 0 ? "green" : "orange"}>{processor.activeProcessorThreads} / {total}</Tag>
                         </Popover>
                         <Popover content={"Configured batch size of this processor"}>
-                        <Badge count={processor.batchSize} style={{ backgroundColor: '#52c41a' }}/>
+                        <Tag color={"cyan"}>Batch size: {processor.batchSize}</Tag>
                         </Popover>
                     </Space>
                 }}/>

@@ -5,6 +5,8 @@ export interface TokenOverviewData {
     currentIndex: number,
     behind: number,
     segment: number,
+    mergeableSegment: number,
+    isMergable: boolean,
     owner: string,
     tokenType: string,
     replaying: boolean,

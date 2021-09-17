@@ -1,4 +1,4 @@
-package com.insidion.axon.openadmin
+package nl.codecentric.axon.openadmin
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller

@@ -1,6 +1,6 @@
-package com.insidion.autoconfigure
+package nl.codecentric.autoconfigure
 
-import com.insidion.axon.openadmin.AxonAdminConfiguration
+import nl.codecentric.axon.openadmin.AxonAdminConfiguration
 import org.axonframework.springboot.autoconfig.AxonAutoConfiguration
 import org.springframework.boot.autoconfigure.AutoConfigureAfter
 import org.springframework.context.annotation.Configuration

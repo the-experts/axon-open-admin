@@ -6,6 +6,7 @@ import _ from "lodash";
 
 function ProcessorStatusContainer() {
     const nodeInformations = useSelector(nodeInformationSelector)
+        .map(r => ({...r, key: r.nodeId}))
 
     const allProcessors = _.uniq(nodeInformations
         .flatMap((n) => n.processorStates?.map(ps => ps.name) ?? []));

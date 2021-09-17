@@ -1,15 +1,13 @@
-package com.insidion.axon.openadmin
+package nl.codecentric.axon.openadmin
 
-import com.insidion.axon.openadmin.events.EventTailingService
-import com.insidion.axon.openadmin.model.TokenInformationDTO
-import com.insidion.axon.openadmin.processors.ProcessorStatusService
-import com.insidion.axon.openadmin.tokens.TokenInformationService
+import nl.codecentric.axon.openadmin.events.EventTailingService
+import nl.codecentric.axon.openadmin.metrics.TokenStatusService
+import nl.codecentric.axon.openadmin.model.TokenInformationDTO
+import nl.codecentric.axon.openadmin.processors.ProcessorStatusService
 import org.axonframework.config.EventProcessingModule
 import org.axonframework.eventhandling.StreamingEventProcessor
-import org.axonframework.eventhandling.TrackingEventProcessor
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("\${axon.admin.base-url:axon-admin}")
 class AxonOpenAdminEndpoint(
-    private val axonOpenAdminTokenStore: TokenInformationService,
-    private val processorStatusService: ProcessorStatusService,
-    private val eventProcessingModule: EventProcessingModule,
-    private val eventTailingService: EventTailingService,
+        private val tokenStatusService: TokenStatusService,
+        private val processorStatusService: ProcessorStatusService,
+        private val eventProcessingModule: EventProcessingModule,
+        private val eventTailingService: EventTailingService,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping("/tokens")
     fun getTokens(): TokenInformationDTO {
-        return axonOpenAdminTokenStore.getProcessors()
+        return tokenStatusService.getTokenInformation()
     }
 
     @GetMapping("/processors")
@@ -42,7 +40,7 @@ class AxonOpenAdminEndpoint(
         return runOnProcessorWithResponse(processorName) {
             val status = it.processingStatus()[segmentId]
             val replayAfter = status?.isReplaying == true // When splitting, axon reverts to a normal token for some reason
-            if (!it.isRunning) {
+            if (!it.isRunning || status == null) {
                 logger.error("Will not split segment since it is not running on this node")
                 return@runOnProcessorWithResponse false
             }
@@ -126,6 +124,7 @@ class AxonOpenAdminEndpoint(
         val result = eventProcessor
             .map(block)
             .orElse(false)
+        tokenStatusService.updateCachedInformation()
 
         return if (result) ResponseEntity.ok().build() else ResponseEntity.status(500).build()
     }

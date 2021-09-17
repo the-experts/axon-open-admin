@@ -1,4 +1,4 @@
-package com.insidion.axon.openadmin.tokens
+package nl.codecentric.axon.openadmin.tokens
 
 import org.axonframework.eventhandling.tokenstore.AbstractTokenEntry
 import org.axonframework.eventhandling.tokenstore.GenericTokenEntry

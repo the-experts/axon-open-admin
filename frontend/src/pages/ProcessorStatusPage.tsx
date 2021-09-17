@@ -1,9 +1,14 @@
-import {Card, Popover, Space, Typography} from "antd";
 import {QuestionCircleOutlined} from "@ant-design/icons";
+import {Card, Popover, Space, Typography} from "antd";
+import React, {useEffect} from "react";
 import ProcessorStatusContainer from "../components/processors/ProcessorStatusContainer";
-import React from "react";
+import {startProcessorFetching, stopProcessorFetching} from "../redux/tokens/fetcher";
 
 export function ProcessorStatusPage() {
+    useEffect(() => {
+        startProcessorFetching()
+        return () => stopProcessorFetching()
+    }, [])
     return <Card title={<div>
         <Popover
             placement={"right"}

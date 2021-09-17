@@ -9,7 +9,7 @@ export interface EventsSliceState {
 export const fetchEvents = createAsyncThunk(
     'events/get',
     async () => {
-        let response = await fetch(contextPath + "/events", {method: 'GET'});
+        let response = await fetch(`/${contextPath}/events`, {method: 'GET'});
         if (response.ok) {
             return await response.json() as EventModel[]
         }

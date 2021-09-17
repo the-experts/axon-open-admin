@@ -1,4 +1,4 @@
-package com.insidion.axon.openadmin.events
+package nl.codecentric.axon.openadmin.events
 
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.DomainEventMessage
