@@ -49,7 +49,7 @@
         <dependency>
             <groupId>nl.codecentric.axon-open-admin</groupId>
             <artifactId>axon-open-admin-starter</artifactId>
-            <version>0.0.6</version>
+            <version>0.0.8</version>
         </dependency>
 
         <dependency>

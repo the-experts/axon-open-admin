@@ -35,6 +35,9 @@ class AxonOpenAdminEndpoint(
     @GetMapping("/events")
     fun getEvents() = eventTailingService.getEvents()
 
+    @GetMapping("/events/{aggregateId}")
+    fun getEventsForAggregate(@PathVariable aggregateId: String) = eventTailingService.getEvents(aggregateId)
+
     @PostMapping("/processor/{processorName}/split/{segmentId}")
     fun split(@PathVariable processorName: String, @PathVariable segmentId: Int): ResponseEntity<Unit> {
         return runOnProcessorWithResponse(processorName) {

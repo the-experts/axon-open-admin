@@ -16,7 +16,7 @@ Add the following dependency to your maven project:
 <dependency>
     <groupId>nl.codecentric.axon-open-admin</groupId>
     <artifactId>axon-open-admin</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.8</version>
 </dependency>
 ```
 

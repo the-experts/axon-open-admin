@@ -10,7 +10,7 @@ export interface TokenSliceState {
 export const fetchTokens = createAsyncThunk(
     'tokens/get',
     async () => {
-        let response = await fetch(`/${contextPath}/tokens`, {method: 'GET'});
+        let response = await fetch(`${contextPath}/tokens`, {method: 'GET'});
         if (response.ok) {
             return await response.json() as TokenInformationSummary
         }
@@ -22,7 +22,7 @@ export const fetchTokens = createAsyncThunk(
 export const fetchNodeInformation = createAsyncThunk(
     'node/get',
     async () => {
-        let response = await fetch(`/${contextPath}/processors`, {method: 'GET'});
+        let response = await fetch(`${contextPath}/processors`, {method: 'GET'});
         if (response.ok) {
             return await response.json()
         }

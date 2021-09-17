@@ -9,6 +9,8 @@ export function startTokenFetching() {
 // @ts-ignore TODO
         intervalTokens = setInterval(() => store.dispatch(fetchTokens()), 500)
     }
+// @ts-ignore TODO
+    store.dispatch(fetchTokens())
 }
 
 export function startProcessorFetching() {
@@ -16,6 +18,8 @@ export function startProcessorFetching() {
 // @ts-ignore TODO
         intervalProcessors = setInterval(() => store.dispatch(fetchNodeInformation()), 500)
     }
+// @ts-ignore TODO
+    store.dispatch(fetchNodeInformation())
 }
 
 export function stopTokenFetching() {

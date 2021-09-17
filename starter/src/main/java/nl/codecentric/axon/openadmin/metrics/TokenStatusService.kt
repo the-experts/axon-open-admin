@@ -28,8 +28,6 @@ class TokenStatusService(
         private val serializer: Serializer,
         private val eventStore: EventStore,
 ) {
-    @Autowired(required = false)
-    private val micrometerMetricProvider: MicrometerMetricProvider? = null
     private val metricMap: MutableMap<ProcessorId, MutableList<Measurement>> = mutableMapOf()
     private val statisticMap: MutableMap<ProcessorId, Statistics> = mutableMapOf()
     private val tokenInformationMap: MutableMap<String, ProcessorDTO> = mutableMapOf()
@@ -97,10 +95,7 @@ class TokenStatusService(
             if (it.owner == null || position < lastKnownPosition) {
                 metricMap.remove(id)
             }
-            val metricList = metricMap.computeIfAbsent(id) { processorId ->
-                micrometerMetricProvider?.registerTokenAsGauge(it, processorId)
-                mutableListOf()
-            }
+            val metricList = metricMap.computeIfAbsent(id) { mutableListOf() }
             metricList.add(Measurement(time, position))
             metricList.removeIf { m -> m.time.isBefore(time.minus(5, ChronoUnit.MINUTES)) }
             statisticMap[id] = computeStatistics(id, position, headPosition)

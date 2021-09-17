@@ -10,7 +10,7 @@ async function startProcessor(name: string, attempt = 1) {
     if (attempt > 10) {
         return;
     }
-    const result = await fetch(`/${contextPath}/processor/${name}/start`, {method: 'POST'})
+    const result = await fetch(`${contextPath}/processor/${name}/start`, {method: 'POST'})
     if (!result.ok) {
         await startProcessor(name, attempt + 1)
     } else {

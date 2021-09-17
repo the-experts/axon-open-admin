@@ -20,13 +20,15 @@ import javax.sql.DataSource
 @ComponentScan("nl.codecentric.axon.openadmin")
 class AxonAdminConfiguration (
     @Value("\${server.servlet.context-path:}")
-    val contextPath: String
+    val contextPath: String,
+    @Value("\${axon.admin.base-url:axon-admin}")
+    val axonAdminPath: String,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostConstruct
     fun logInitialization() {
-        logger.info("Thanks for using AxonOpenAdmin in your application. To get started, navigate to $contextPath/axon-open-admin")
+        logger.info("Thanks for using AxonOpenAdmin in your application. To get started, navigate to $contextPath/$axonAdminPath")
     }
 
     @Bean

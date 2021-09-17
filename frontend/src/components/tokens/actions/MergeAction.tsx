@@ -5,7 +5,7 @@ import {contextPath} from "../../../context";
 import {TokenOverviewData} from "../TokenOverviewData";
 
 async function mergeProcessor(name: string, segment: number, attempt = 1) {
-    const result = await fetch(`/${contextPath}/processor/${name}/merge/${segment}`, {method: 'POST'})
+    const result = await fetch(`${contextPath}/processor/${name}/merge/${segment}`, {method: 'POST'})
     if (!result.ok) {
         if (attempt > 5) {
             return;

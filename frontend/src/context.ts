@@ -1,9 +1,11 @@
-const appContextPath = "__APP_CONTEXT_PATH__";
+
 function getContentPath() {
-    if (appContextPath.startsWith("__")) {
-        return "axon-admin"
+    // @ts-ignore
+    if (window.appContextPath.startsWith("__")) {
+        return "/axon-admin"
     }
-    return appContextPath
+    // @ts-ignore
+    return window.appContextPath
 }
 console.log("context-path is " + getContentPath())
 export const contextPath = getContentPath()

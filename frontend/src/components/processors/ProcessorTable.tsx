@@ -1,4 +1,4 @@
-import {Badge, Popover, Space, Table, Tag} from "antd";
+import {Popover, Space, Table, Tag} from "antd";
 import React from "react";
 import {NodeInformation} from "../../redux/tokens/models";
 

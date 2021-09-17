@@ -5,7 +5,7 @@ import {contextPath} from "../../../context";
 import {SplitCellsOutlined} from "@ant-design/icons";
 
 async function splitProcessor(name: string, segment: number, attempt = 1) {
-    const result = await fetch(`/${contextPath}/processor/${name}/split/${segment}`, {method: 'POST'})
+    const result = await fetch(`${contextPath}/processor/${name}/split/${segment}`, {method: 'POST'})
     if (!result.ok) {
         if (attempt > 5) {
             return;

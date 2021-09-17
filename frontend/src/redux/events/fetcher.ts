@@ -3,9 +3,14 @@ import {fetchEvents} from "./EventsSlice";
 
 let intervalEvents: any;
 
-export function startEventFetching() {
+export function startEventFetching(aggregateId?: string) {
+    if(intervalEvents != null) {
+        stopEventFetching()
+    }
 // @ts-ignore TODO
-    intervalEvents = setInterval(() => store.dispatch(fetchEvents()), 1000)
+    intervalEvents = setInterval(() => store.dispatch(fetchEvents(aggregateId)), 1000)
+// @ts-ignore TODO
+    store.dispatch(fetchEvents(aggregateId))
 }
 
 export function stopEventFetching() {

@@ -17,12 +17,12 @@ function AppMenu() {
     const history = useHistory();
     const location = useLocation();
     const onSelectCallback = useCallback(({key}) => {
-        history.push(`/${contextPath}${key}`)
+        history.push(`${contextPath}/${key}`)
     }, [history])
 
-    const realUrl = location.pathname.startsWith("/" + contextPath) ? location.pathname.substr(contextPath.length + 1) : location.pathname
-
-    const selectedKey = realUrl === "/" ? "/tokens" : realUrl;
+    const realUrl = location.pathname.startsWith(contextPath) ? location.pathname.substr(contextPath.length + 1) : location.pathname
+    console.log(`Found page to be ${location.pathname} -> ${realUrl}`)
+    const selectedKey = realUrl.length <= 1 ? "tokens" : realUrl;
     return <Menu
         mode="inline"
         defaultSelectedKeys={[selectedKey]}
@@ -30,9 +30,9 @@ function AppMenu() {
         onSelect={onSelectCallback}
         style={{height: '100%', borderRight: 0}}
     >
-        <Menu.Item key="/tokens"><BranchesOutlined/> Token Management</Menu.Item>
-        <Menu.Item key="/processors"><DashboardOutlined/> Processor Status</Menu.Item>
-        <Menu.Item key="/events"><DatabaseOutlined/> Events log</Menu.Item>
+        <Menu.Item key="tokens"><BranchesOutlined/> Token Management</Menu.Item>
+        <Menu.Item key="processors"><DashboardOutlined/> Processor Status</Menu.Item>
+        <Menu.Item key="events" ><DatabaseOutlined/> Events log</Menu.Item>
     </Menu>;
 }
 
@@ -42,7 +42,7 @@ function App() {
             <Provider store={store}>
                 <Layout style={{minHeight: '100vh'}}>
                     <Header className="header">
-                        <img src="logo.png" alt={"codecentric Logo"}/>
+                        <img src={contextPath + "/logo.png"} alt={"codecentric Logo"}/>
                         <Typography.Title className={"title"} level={1}>Axon Open Admin</Typography.Title>
                     </Header>
                     <Layout>
@@ -59,10 +59,10 @@ function App() {
                                 }}
                             >
 
-                                <Route path={`/${contextPath}/`} exact><TokenManagementPage/></Route>
-                                <Route path={`/${contextPath}/tokens`}><TokenManagementPage/></Route>
-                                <Route path={`/${contextPath}/processors`}><ProcessorStatusPage/></Route>
-                                <Route path={`/${contextPath}/events`}><EventsPage/></Route>
+                                <Route path={`${contextPath}/`} exact><TokenManagementPage/></Route>
+                                <Route path={`${contextPath}/tokens`}><TokenManagementPage/></Route>
+                                <Route path={`${contextPath}/processors`}><ProcessorStatusPage/></Route>
+                                <Route path={[`${contextPath}/events/:aggregateId`, `${contextPath}/events`]}><EventsPage/></Route>
                             </Layout.Content>
                         </Layout>
                     </Layout>
