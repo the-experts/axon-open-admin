@@ -14,7 +14,7 @@ Add the following dependency to your maven project:
 
 ```
 <dependency>
-    <groupId>nl.codecentric</groupId>
+    <groupId>nl.codecentric.axon-open-admin</groupId>
     <artifactId>axon-open-admin</artifactId>
     <version>0.0.5</version>
 </dependency>

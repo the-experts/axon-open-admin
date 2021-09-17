@@ -4,20 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>nl.codecentric</groupId>
+        <groupId>nl.codecentric.axon-open-admin</groupId>
         <artifactId>axon-open-admin-parent</artifactId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.6-SNAPSHOT</version>
     </parent>
     <artifactId>axon-open-admin-starter</artifactId>
 
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.6-SNAPSHOT</version>
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>nl.codecentric</groupId>
+            <groupId>nl.codecentric.axon-open-admin</groupId>
             <artifactId>axon-open-admin-frontend</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
