@@ -12,7 +12,8 @@ export interface NodeProcessorState {
     resettable: boolean,
     activeProcessorThreads?: number
     availableProcessorThreads?: number
-    batchSize: number
+    batchSize: number,
+    type: string,
 }
 
 

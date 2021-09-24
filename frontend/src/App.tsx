@@ -1,17 +1,22 @@
-import {BranchesOutlined, DashboardOutlined, DatabaseOutlined} from "@ant-design/icons";
+import {BranchesOutlined, DatabaseOutlined} from "@ant-design/icons";
 
 import {Layout, Menu, Typography} from "antd";
 import 'antd/dist/antd.css';
 import {Footer, Header} from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Provider} from "react-redux";
 import {BrowserRouter, Route, useHistory, useLocation} from "react-router-dom";
 import {contextPath} from "./context";
-import {EventsPage} from "./pages/EventsPage";
-import {ProcessorStatusPage} from "./pages/ProcessorStatusPage";
-import {TokenManagementPage} from "./pages/TokenManagementPage";
+import {EventExplorer} from "./pages/EventExplorer";
+import {ManagementPage} from "./pages/ManagementPage";
 import store from "./redux/store";
+import {
+    startProcessorFetching,
+    startTokenFetching,
+    stopProcessorFetching,
+    stopTokenFetching
+} from "./redux/tokens/fetcher";
 
 function AppMenu() {
     const history = useHistory();
@@ -19,6 +24,15 @@ function AppMenu() {
     const onSelectCallback = useCallback(({key}) => {
         history.push(`${contextPath}/${key}`)
     }, [history])
+
+    useEffect(() => {
+        startTokenFetching()
+        startProcessorFetching()
+        return () => {
+            stopTokenFetching()
+            stopProcessorFetching()
+        }
+    }, [])
 
     const realUrl = location.pathname.startsWith(contextPath) ? location.pathname.substr(contextPath.length + 1) : location.pathname
     console.log(`Found page to be ${location.pathname} -> ${realUrl}`)
@@ -30,9 +44,8 @@ function AppMenu() {
         onSelect={onSelectCallback}
         style={{height: '100%', borderRight: 0}}
     >
-        <Menu.Item key="tokens"><BranchesOutlined/> Token Management</Menu.Item>
-        <Menu.Item key="processors"><DashboardOutlined/> Processor Status</Menu.Item>
-        <Menu.Item key="events" ><DatabaseOutlined/> Events log</Menu.Item>
+        <Menu.Item key="tokens"><BranchesOutlined/> Management</Menu.Item>
+        <Menu.Item key="events/tail" ><DatabaseOutlined/> Event Explorer</Menu.Item>
     </Menu>;
 }
 
@@ -59,10 +72,9 @@ function App() {
                                 }}
                             >
 
-                                <Route path={`${contextPath}/`} exact><TokenManagementPage/></Route>
-                                <Route path={`${contextPath}/tokens`}><TokenManagementPage/></Route>
-                                <Route path={`${contextPath}/processors`}><ProcessorStatusPage/></Route>
-                                <Route path={[`${contextPath}/events/:aggregateId`, `${contextPath}/events`]}><EventsPage/></Route>
+                                <Route path={`${contextPath}/`} exact><ManagementPage/></Route>
+                                <Route path={`${contextPath}/tokens`}><ManagementPage/></Route>
+                                <Route path={[`${contextPath}/events/tail`]}><EventExplorer/></Route>
                             </Layout.Content>
                         </Layout>
                     </Layout>

@@ -7,7 +7,7 @@ import {SegmentActions} from "./actions/SegmentActions";
 
 function TokenTable({loading, rows}: { loading: boolean, rows: TokenOverviewData[] }) {
     return (
-        <Table loading={loading} dataSource={rows} pagination={{pageSize: 20}} size={"small"}>
+        <Table loading={loading} dataSource={rows} pagination={false} size={"small"}>
             <Table.Column title="Processor" key="processorName"
                           render={row => ({children: <ProcessorTitle row={row}/>, props: {rowSpan: row.rowSpan}})}/>
             <Table.Column title="Actions" key="processorActions" render={row => ({children: <ProcessorActions row={row}/>, props: {rowSpan: row.rowSpan}})}/>

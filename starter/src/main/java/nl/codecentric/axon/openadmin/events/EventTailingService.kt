@@ -18,8 +18,18 @@ class EventTailingService(
         private val serializer: Serializer,
         private val eventStore: EventStorageEngine,
 ) {
-    fun getEvents(): List<CaughtEvent> {
-        val events = eventStore.readEvents(GapAwareTrackingToken.newInstance(eventStore.createHeadToken().position().orElse(0) - 50, emptyList()), true)
+
+    fun getCurrentIndex(): Long {
+        return eventStore.createHeadToken().position().orElse(0)
+    }
+    fun getIndexAt(instant: Instant): Long {
+        return eventStore.createTokenAt(instant).position().orElse(0)
+    }
+
+    fun getEvents(sinceIndex: Long?): List<CaughtEvent> {
+        val index = sinceIndex ?: (getCurrentIndex() - 100)
+        val events = eventStore.readEvents(GapAwareTrackingToken.newInstance(index, emptyList()), true)
+                .limit(100)
         return mapEvents(events)
     }
 

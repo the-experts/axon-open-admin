@@ -14,7 +14,6 @@ export function mapProcessorInformationToDataSource(processorInformation: TokenI
                 behind: segment.behind,
                 segment: segment.segment,
                 mergeableSegment: segment.mergeableSegment,
-                isMergable: true,//!!p.segments.find(s => s.mergeableSegment == segment.segment),
                 owner: segment.owner,
                 tokenType: segment.tokenType,
                 replaying: p.segments.filter(s => s.replaying).length > 0,

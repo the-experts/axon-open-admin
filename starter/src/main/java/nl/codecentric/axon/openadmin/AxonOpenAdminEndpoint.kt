@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 
 @RestController
 @RequestMapping("\${axon.admin.base-url:axon-admin}")
@@ -32,8 +37,14 @@ class AxonOpenAdminEndpoint(
     @GetMapping("/processors")
     fun getProcessors() = processorStatusService.getStatus()
 
+
+    @GetMapping("/index")
+    fun getIndex(@RequestParam(name = "sinceTime", required = false) sinceTime: String?) = if (sinceTime != null) {
+        eventTailingService.getIndexAt(Instant.parse(sinceTime))
+    } else eventTailingService.getCurrentIndex()
+
     @GetMapping("/events")
-    fun getEvents() = eventTailingService.getEvents()
+    fun getEvents(@RequestParam(name = "sinceIndex", required = false) sinceIndex: Long?) = eventTailingService.getEvents(sinceIndex)
 
     @GetMapping("/events/{aggregateId}")
     fun getEventsForAggregate(@PathVariable aggregateId: String) = eventTailingService.getEvents(aggregateId)
@@ -121,12 +132,12 @@ class AxonOpenAdminEndpoint(
 
     private fun runOnProcessorWithResponse(processorName: String, block: (StreamingEventProcessor) -> Boolean): ResponseEntity<Unit> {
         val eventProcessor = eventProcessingModule.eventProcessor(processorName, StreamingEventProcessor::class.java)
-        if(!eventProcessor.isPresent) {
+        if (!eventProcessor.isPresent) {
             return ResponseEntity.status(409).build()
         }
         val result = eventProcessor
-            .map(block)
-            .orElse(false)
+                .map(block)
+                .orElse(false)
         tokenStatusService.updateCachedInformation()
 
         return if (result) ResponseEntity.ok().build() else ResponseEntity.status(500).build()

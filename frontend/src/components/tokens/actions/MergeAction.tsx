@@ -26,7 +26,7 @@ export function MergeAction({row}: { row: TokenOverviewData }) {
 
     return <Popover content={<p>Merges the segment with its closest relative (segment {row.mergeableSegment}), creating one token out of two. <br/>Effectively reduces active event processor threads by one.</p>}
                     placement={"bottom"}>
-        <Button type="default" loading={loading} onClick={onSplitAction} disabled={row.owner == null || row.mergeableSegment === row.segment || !row.isMergable}>
+        <Button type="default" loading={loading} onClick={onSplitAction} disabled={row.owner == null || row.mergeableSegment === row.segment}>
             <MergeCellsOutlined/>
         </Button>
     </Popover>
