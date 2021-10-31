@@ -43,3 +43,11 @@ There are a few things to keep in mind if you are planning on using this library
 - There is a known issue with `spring-boot-devtools`. With devtools enabled your application will fail to boot.
 - All nodes need to be reachable from the front-end you are accessing. If some other node is behind another load balancer, the application will not be able to take actions.
 
+# More on Axon Framework
+At codecentric we blog about certain challenges or opportunities we encounter when using Axon Framework. Currently we have the following published:
+
+- [Replaying for a single aggregate in Axon Framework](https://blog.codecentric.nl/mitchellherrijgers/replaying-for-a-single-aggregate-in-axon-framework-126m)
+- [Dealing with personal data in Axon Framework](https://blog.codecentric.nl/mitchellherrijgers/axon-framework-dealing-with-personal-data-3amp)
+- [Taking advantage of Metadata in Axon Framework](https://blog.codecentric.nl/mitchellherrijgers/taking-advantage-of-metadata-in-axon-framework-3da9)
+
+Take a look if you're interested. Happy reading!
