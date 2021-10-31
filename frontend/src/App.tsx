@@ -7,6 +7,7 @@ import Sider from "antd/es/layout/Sider";
 import React, {useCallback, useEffect} from 'react';
 import {Provider} from "react-redux";
 import {BrowserRouter, Route, useHistory, useLocation} from "react-router-dom";
+import {CommandProgressModal} from "./components/tokens/commands/CommandProgressModal";
 import {contextPath} from "./context";
 import {EventExplorer} from "./pages/EventExplorer";
 import {ManagementPage} from "./pages/ManagementPage";
@@ -75,6 +76,8 @@ function App() {
                                 <Route path={`${contextPath}/`} exact><ManagementPage/></Route>
                                 <Route path={`${contextPath}/tokens`}><ManagementPage/></Route>
                                 <Route path={[`${contextPath}/events/tail`]}><EventExplorer/></Route>
+
+                                <CommandProgressModal/>
                             </Layout.Content>
                         </Layout>
                     </Layout>

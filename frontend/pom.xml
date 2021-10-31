@@ -5,10 +5,10 @@
     <parent>
         <groupId>nl.codecentric.axon-open-admin</groupId>
         <artifactId>axon-open-admin-parent</artifactId>
-        <version>0.0.9</version>
+        <version>0.0.10</version>
     </parent>
     <artifactId>axon-open-admin-frontend</artifactId>
-    <version>0.0.9</version>
+    <version>0.0.10</version>
     <name>Frontend</name>
 
     <properties>

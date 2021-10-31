@@ -1,0 +1,25 @@
+package nl.codecentric.axon.openadmin.command.handlers
+
+import nl.codecentric.axon.openadmin.command.AxonAdminCommand
+import nl.codecentric.axon.openadmin.command.AxonAdminCommandHandler
+import nl.codecentric.axon.openadmin.command.AxonAdminCommmandType
+import nl.codecentric.axon.openadmin.metrics.TokenStatusService
+import org.axonframework.config.EventProcessingConfiguration
+import org.axonframework.config.EventProcessingModule
+import org.axonframework.eventhandling.StreamingEventProcessor
+import org.springframework.stereotype.Component
+
+@Component
+class ResetProcessorAxonAdminCommandHandler(
+        eventProcessingModule: EventProcessingConfiguration,
+        tokenStatusService: TokenStatusService
+) : AxonAdminCommandHandler(eventProcessingModule, tokenStatusService) {
+    override fun executeCommand(command: AxonAdminCommand, eventProcessor: StreamingEventProcessor) {
+        if(eventProcessor.isRunning) {
+            throw IllegalStateException("Event processor is still running. Shut down the processor first")
+        }
+        eventProcessor.resetTokens()
+    }
+
+    override val commandType = AxonAdminCommmandType.RESET_PROCESSOR
+}

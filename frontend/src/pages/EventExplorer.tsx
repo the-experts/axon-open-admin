@@ -38,7 +38,7 @@ export function EventExplorer() {
 
         }
 
-    }, [setRangeIndexEnd, setRangeIndexStart])
+    }, [form, setRangeIndexEnd, setRangeIndexStart])
 
     const onFormChange = useCallback((changedValues: Partial<EventTailingConfiguration>, values: EventTailingConfiguration) => {
         setExplorerType(values.type)
@@ -62,7 +62,7 @@ export function EventExplorer() {
             dispatch(clearConfiguration())
             clearInterval(interval)
         }
-    }, [])
+    }, [calculateRange, dispatch])
 
     return <Card title={
         <div>Event Explorer</div>}>

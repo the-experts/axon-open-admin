@@ -33,6 +33,8 @@ class TokenStatusService(
     private val tokenInformationMap: MutableMap<String, ProcessorDTO> = mutableMapOf()
     private val headMeasurements: MutableList<Measurement> = mutableListOf()
 
+    fun getNodeId() = tokenProvider.getNodeId()
+
     fun getTokenInformation() = TokenInformationDTO(
             tokenProvider.getNodeId(),
             headMeasurements.maxByOrNull { it.time }?.value!!,
