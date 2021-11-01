@@ -53,9 +53,7 @@ export async function executeCommands(commands: TokenCommand[]) {
         }
     })
     updateModal(commandsWithProgress)
-    if(commands.length > 1) {
-        store.dispatch(openProgressModal())
-    }
+    store.dispatch(openProgressModal())
     let finished = false
     while (!finished) {
         const commandTodo = commandsWithProgress.find(i => !i.success)!!
@@ -65,7 +63,8 @@ export async function executeCommands(commands: TokenCommand[]) {
         await timeout();
 
         const result = await fetch(`${contextPath}/command`, {method: 'POST', body: JSON.stringify(commandTodo.command.provideCommand()), headers: {"Content-Type": "application/json"}})
-        if (result.ok) {
+        if (result.ok && result.status === 200) {
+            // Ignore 204, this means it's the wrong node
             commandTodo.success = true
             commandTodo.loading = false
         } else if (commandTodo.attempt > 9) {
